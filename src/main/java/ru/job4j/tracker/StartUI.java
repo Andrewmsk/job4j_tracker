@@ -4,14 +4,25 @@ import java.util.concurrent.TimeUnit;
 
 public class StartUI {
 
-        public void init(Input input, Tracker tracker, UserAction[] actions) throws InterruptedException {
+    private int pauseSeconds = 1;
+
+    public StartUI() {
+    }
+
+    public StartUI(int menuPauseSeconds) {
+        this.pauseSeconds = menuPauseSeconds;
+    }
+
+    public void init(
+            Input input, Tracker tracker, UserAction[] actions) throws InterruptedException {
+
             boolean run = true;
         while (run) {
             this.showMenu();
             int select = Integer.parseInt(input.askStr("Выберите пункт меню...\n"));
             UserAction action = actions[select];
             run = action.execute(input, tracker);
-            TimeUnit.SECONDS.sleep(1);
+            TimeUnit.SECONDS.sleep(pauseSeconds);
         }
     }
 

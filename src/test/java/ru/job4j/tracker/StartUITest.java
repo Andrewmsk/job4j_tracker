@@ -94,6 +94,26 @@ public class StartUITest {
     }
 
     @Test
+    public void whenFindAll() throws InterruptedException {
+        Tracker tracker = new Tracker();
+        String[] itemsName = {"First item", "Second item"};
+        Item[] items = {
+                tracker.add(new Item(itemsName[0])),
+                tracker.add(new Item(itemsName[1]))
+        };
+        Output out = new StubOutput();
+        Input in = new StubInput(
+                new String[] {"0", "1"}
+        );
+        UserAction[] actions = {
+                new FindAllAction(out),
+                new ExitAction(out)
+        };
+        new StartUI(0, out).init(in, tracker, actions);
+        assertThat(tracker.findAll(), is(items));
+    }
+
+    @Test
     public void whenExit() throws InterruptedException {
         Output out = new StubOutput();
         Input in = new StubInput(

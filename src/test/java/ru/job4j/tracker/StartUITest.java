@@ -59,4 +59,51 @@ public class StartUITest {
         new StartUI(0, out).init(in, tracker, actions);
         assertThat(tracker.findById(item.getId()), is(nullValue()));
     }
+
+    @Test
+    public void whenFindById() throws InterruptedException {
+        Tracker tracker = new Tracker();
+        Item item = tracker.add(new Item("First item"));
+        Output out = new StubOutput();
+        Input in = new StubInput(
+                new String[] {"0", String.valueOf(item.getId()), "1"}
+        );
+        UserAction[] actions = {
+                new FindByIdAction(out),
+                new ExitAction(out)
+        };
+        new StartUI(0, out).init(in, tracker, actions);
+        assertThat(tracker.findById(item.getId()).getId(), is(1));
+    }
+
+    @Test
+    public void whenFindByName() throws InterruptedException {
+        Tracker tracker = new Tracker();
+        String findName = "First item";
+        Item item = tracker.add(new Item(findName));
+        Output out = new StubOutput();
+        Input in = new StubInput(
+                new String[] {"0", String.valueOf(item.getName()), "1"}
+        );
+        UserAction[] actions = {
+                new FindByNameAction(out),
+                new ExitAction(out)
+        };
+        new StartUI(0, out).init(in, tracker, actions);
+        assertThat(tracker.findByName(findName)[0].getName(), is(findName));
+    }
+
+    @Test
+    public void whenExit() throws InterruptedException {
+        Output out = new StubOutput();
+        Input in = new StubInput(
+                new String[] {"0"}
+        );
+        Tracker tracker = new Tracker();
+        UserAction[] actions = {
+                new ExitAction(out)
+        };
+        new StartUI(out).init(in, tracker, actions);
+        assertThat(out.toString(), is("Menu." + "0. Exit"));
+    }
 }

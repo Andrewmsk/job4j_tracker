@@ -13,12 +13,13 @@ public class StartUITest {
         Input in = new StubInput(
                 new String[] {"0", "Item name", "1"}
         );
+        Output out = new StubOutput();
         Tracker tracker = new Tracker();
         UserAction[] actions = {
-                new CreateAction(),
-                new ExitAction()
+                new CreateAction(out),
+                new ExitAction(out)
         };
-        new StartUI(0).init(in, tracker, actions);
+        new StartUI(0, out).init(in, tracker, actions);
         assertThat(tracker.findAll()[0].getName(), is("Item name"));
     }
 
@@ -34,11 +35,12 @@ public class StartUITest {
                         "1"
                 }
         );
+        Output out = new StubOutput();
         UserAction[] actions = {
-                new ReplaceAction(),
-                new ExitAction()
+                new ReplaceAction(out),
+                new ExitAction(out)
         };
-        new StartUI(0).init(in, tracker, actions);
+        new StartUI(0, out).init(in, tracker, actions);
         assertThat(tracker.findById(item.getId()).getName(), is(replacedName));
     }
 
@@ -49,11 +51,12 @@ public class StartUITest {
         Input in = new StubInput(
                 new String[] {"0", String.valueOf(item.getId()), "1"}
         );
+        Output out = new StubOutput();
         UserAction[] actions = {
-                new DeleteAction(),
-                new ExitAction()
+                new DeleteAction(out),
+                new ExitAction(out)
         };
-        new StartUI(0).init(in, tracker, actions);
+        new StartUI(0, out).init(in, tracker, actions);
         assertThat(tracker.findById(item.getId()), is(nullValue()));
     }
 }

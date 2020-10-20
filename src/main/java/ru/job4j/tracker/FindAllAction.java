@@ -21,7 +21,7 @@ public class FindAllAction implements UserAction {
             return true;
         }
         for (Item item: items) {
-            out.println(item);
+            out.println(item.getName());
         }
         return true;
     }

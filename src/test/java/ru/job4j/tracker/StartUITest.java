@@ -73,7 +73,10 @@ public class StartUITest {
                 new ExitAction(out)
         };
         new StartUI(0, out).init(in, tracker, actions);
-        assertThat(tracker.findById(item.getId()).getId(), is(1));
+        assertThat(out.toString(), is(
+                "Menu.0. === Find item by Id ====1. Exit1" +
+                        "Menu.0. === Find item by Id ====1. Exit"
+        ));
     }
 
     @Test
@@ -90,17 +93,18 @@ public class StartUITest {
                 new ExitAction(out)
         };
         new StartUI(0, out).init(in, tracker, actions);
-        assertThat(tracker.findByName(findName)[0].getName(), is(findName));
+        assertThat(out.toString(), is(
+                "Menu.0. === Find items by name ====" +
+                "1. ExitFirst itemMenu.0. === Find items by name ====1. Exit"
+        ));
     }
 
     @Test
     public void whenFindAll() throws InterruptedException {
         Tracker tracker = new Tracker();
         String[] itemsName = {"First item", "Second item"};
-        Item[] items = {
-                tracker.add(new Item(itemsName[0])),
-                tracker.add(new Item(itemsName[1]))
-        };
+        tracker.add(new Item(itemsName[0]));
+        tracker.add(new Item(itemsName[1]));
         Output out = new StubOutput();
         Input in = new StubInput(
                 new String[] {"0", "1"}
@@ -110,7 +114,12 @@ public class StartUITest {
                 new ExitAction(out)
         };
         new StartUI(0, out).init(in, tracker, actions);
-        assertThat(tracker.findAll(), is(items));
+        assertThat(out.toString(), is(
+                "Menu.0. === Show all items ====" +
+                "1. ExitFirst itemSecond itemMenu." +
+                "0. === Show all items ====1. Exit"
+        ));
+
     }
 
     @Test

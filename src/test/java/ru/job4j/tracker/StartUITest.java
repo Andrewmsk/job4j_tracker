@@ -135,4 +135,25 @@ public class StartUITest {
         new StartUI(out).init(in, tracker, actions);
         assertThat(out.toString(), is("Menu." + "0. Exit"));
     }
+
+    @Test
+    public void whenInvalidExit() throws InterruptedException {
+        Output out = new StubOutput();
+        Input in = new StubInput(
+                new String[] { "1", "0" }
+        );
+        Tracker tracker = new Tracker();
+        UserAction[] actions = {
+
+                new ExitAction(out)
+        };
+        new StartUI(out).init(in, tracker, actions);
+        assertThat(out.toString(), is(
+                "Menu."
+                        + "0. Exit"
+                        + "Wrong input, you can select: 0 .. 0"
+                        + "Menu."
+                        + "0. Exit"
+        ));
+    }
 }

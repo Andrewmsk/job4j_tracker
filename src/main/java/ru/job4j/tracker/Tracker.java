@@ -1,24 +1,23 @@
 package ru.job4j.tracker;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Tracker {
-    private final Item[] items = new Item[100];
+    private final List<Item> items = new ArrayList<>();
     private int ids = 1;
-    private int size = 0;
 
     public Item add(Item item) {
         item.setId(ids++);
-        items[size++] = item;
+        items.add(item);
         return item;
     }
 
     private int indexOf(int id) {
         int rsl = -1;
-        for (int index = 0; index < size; index++) {
-            if (items[index].getId() == id) {
-                rsl = index;
-                break;
+        for (int i = 0; i < items.size(); i++) {
+            if (items.get(i).getId() == id) {
+                return i;
             }
         }
         return rsl;
@@ -26,22 +25,21 @@ public class Tracker {
 
     public Item findById(int id) {
         int index = indexOf(id);
-        return index != -1 ? items[index] : null;
+        return index != -1 ? items.get(index) : null;
     }
 
-    public Item[] findAll() {
-        return Arrays.copyOf(items, size);
+    public List<Item> findAll() {
+        return new ArrayList<>(items);
     }
 
-    public Item[] findByName(String key) {
-        Item[] resultItems = new Item[size];
-        int resultIndex = 0;
-        for (int i = 0; i < size; i++) {
-            if (items[i].getName().equals(key)) {
-                resultItems[resultIndex++] = items[i];
+    public List<Item> findByName(String key) {
+        List<Item> resultItems = new ArrayList<>();
+        for (Item item: items) {
+            if (item.getName().equals(key)) {
+                resultItems.add(item);
             }
         }
-        return Arrays.copyOf(resultItems, resultIndex);
+        return resultItems;
     }
 
     public boolean replace(int id, Item item) {
@@ -50,16 +48,14 @@ public class Tracker {
             return false;
         }
         item.setId(id);
-        items[index] = item;
+        items.set(index, item);
         return true;
     }
 
     public boolean delete(int id) {
         int n = indexOf(id);
         if (n >= 0) {
-            System.arraycopy(items, n + 1, items, size, size - n);
-            items[size - 1] = null;
-            size--;
+            items.remove(items.get(n));
             return true;
         }
         return false;

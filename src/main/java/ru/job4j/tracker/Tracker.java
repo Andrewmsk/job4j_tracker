@@ -55,7 +55,7 @@ public class Tracker {
     public boolean delete(int id) {
         int n = indexOf(id);
         if (n >= 0) {
-            items.remove(items.get(n));
+            items.remove(n);
             return true;
         }
         return false;

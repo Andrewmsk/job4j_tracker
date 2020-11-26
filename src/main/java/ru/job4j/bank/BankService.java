@@ -1,9 +1,6 @@
 package ru.job4j.bank;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class BankService {
     private final Map<User, List<Account>> users = new HashMap<>();
@@ -13,21 +10,25 @@ public class BankService {
     }
 
     public void addAccount(String passport, Account account) {
-        users.get(findByPassport(passport)).add(account);
+        User user = findByPassport(passport);
+        if (user != null && !users.get(user).contains(account)) {
+            users.get(user).add(account);
+        }
     }
 
     public User findByPassport(String passport) {
-        for (Map.Entry<User, List<Account>> user: users.entrySet()) {
-            if (user.getKey().getPassport().equals(passport)) {
-                return user.getKey();
+        for (User user: users.keySet()) {
+            if (user.getPassport().equals(passport)) {
+                return user;
             }
         }
         return null;
     }
 
     public Account findByRequisite(String passport, String requisite) {
-        List<Account> accounts = users.get(findByPassport(passport));
-        if (accounts == null) return null;
+        User user = findByPassport(passport);
+        if (user == null) return null;
+        List<Account> accounts = users.get(user);
         for (Account account: accounts) {
             if (account.getRequisite().equals(requisite)) {
                 return account;

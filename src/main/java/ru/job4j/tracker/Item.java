@@ -62,8 +62,4 @@ public class Item implements Comparable<Item> {
     public int compareTo(Item o) {
         return this.name.compareTo(o.getName());
     }
-
-    public int compareToReverse(Item o) {
-        return o.getName().compareTo(this.name);
-    }
 }

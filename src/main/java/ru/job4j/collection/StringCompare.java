@@ -6,18 +6,12 @@ public class StringCompare implements Comparator<String> {
 
     @Override
     public int compare(String left, String right) {
-        for (int i = 0; i < left.length(); i++) {
-            if (right.length() - 1 < i) {
-                return 1;
-            }
+        for (int i = 0; i < Math.min(left.length(), right.length()); i++) {
             int result = Character.compare(left.charAt(i), right.charAt(i));
             if (result != 0) {
                 return result;
             }
         }
-        if (left.length() < right.length()) {
-            return -1;
-        }
-        return 0;
+        return Integer.compare(left.length(), right.length());
     }
 }

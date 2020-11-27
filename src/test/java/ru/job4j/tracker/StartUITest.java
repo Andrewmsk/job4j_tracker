@@ -73,8 +73,8 @@ public class StartUITest {
         actions.add(new ExitAction(out));
         new StartUI(0, out).init(in, tracker, actions);
         assertThat(out.toString(), is(
-                "Menu.0. === Find item by Id ====1. Exit1" +
-                        "Menu.0. === Find item by Id ====1. Exit"
+                "Menu.0. === Find item by Id ====1. Exit1"
+                        + "Menu.0. === Find item by Id ====1. Exit"
         ));
     }
 
@@ -92,8 +92,8 @@ public class StartUITest {
         actions.add(new ExitAction(out));
         new StartUI(0, out).init(in, tracker, actions);
         assertThat(out.toString(), is(
-                "Menu.0. === Find items by name ====" +
-                "1. ExitFirst itemMenu.0. === Find items by name ====1. Exit"
+                "Menu.0. === Find items by name ===="
+                        + "1. ExitFirst itemMenu.0. === Find items by name ====1. Exit"
         ));
     }
 
@@ -112,9 +112,9 @@ public class StartUITest {
         actions.add(new ExitAction(out));
         new StartUI(0, out).init(in, tracker, actions);
         assertThat(out.toString(), is(
-                "Menu.0. === Show all items ====" +
-                "1. ExitFirst itemSecond itemMenu." +
-                "0. === Show all items ====1. Exit"
+                "Menu.0. === Show all items ===="
+                        + "1. ExitFirst itemSecond itemMenu."
+                        + "0. === Show all items ====1. Exit"
         ));
 
     }
@@ -136,7 +136,7 @@ public class StartUITest {
     public void whenInvalidExit() throws InterruptedException {
         Output out = new StubOutput();
         Input in = new StubInput(
-                new String[] { "1", "0" }
+                new String[]{"1", "0"}
         );
         Tracker tracker = new Tracker();
         List<UserAction> actions = new ArrayList<>();

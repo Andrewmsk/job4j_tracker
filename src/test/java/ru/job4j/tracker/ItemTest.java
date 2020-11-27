@@ -43,6 +43,7 @@ public class ItemTest {
     public void whenCompareReverse() {
         Item firstItem = new Item("Andrew");
         Item secondItem = new Item("Steve");
-        assertTrue(firstItem.compareToReverse(secondItem) > 0);
+        Comparator<Item> itemComparator = new ItemDescByName();
+        assertTrue(itemComparator.compare(firstItem, secondItem) > 0);
     }
 }
